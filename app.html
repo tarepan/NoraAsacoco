@@ -75,6 +75,8 @@
   </head>
   <body>
     <div>有識エンジニアP氏「それクリックすれば編集できるで」</div>
+    <input type="file" id="mainImage" accept="image/*" />
+    <img id="preview" />
     <div contenteditable>
       <svg width="600" height="600" viewbox="0, 0, 300, 300">
         <image x="0" y="0" width="300" xlink:href="./back.jpg"></image>
@@ -121,6 +123,7 @@
           エンジニアP氏
         </text>
         <image
+          id="mainImageSVG"
           x="50"
           y="30"
           width="150"
@@ -193,5 +196,17 @@
         <!-- <image x="220" y="75" width="80" xlink:href="./eg/ugeEdit.png"></image> -->
       </svg>
     </div>
+    <script>
+      const inputElem = document.querySelector("#mainImage");
+      const mainImageSVGElem = document.querySelector("#mainImageSVG");
+      inputElem.addEventListener("change", () => {
+        const fileReader = new FileReader();
+        fileReader.addEventListener("load", (event) => {
+          const imageBase64 = event.target.result;
+          mainImageSVGElem.setAttribute("xlink:href", imageBase64);
+        });
+        fileReader.readAsDataURL(inputElem.files[0]);
+      });
+    </script>
   </body>
 </html>
